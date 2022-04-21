@@ -1,0 +1,39 @@
+{
+    "currentIndex": 0,
+    "tabs": [
+        {
+            "checkerIndex": 0,
+            "customCheckers": [
+            ],
+            "customCompileCommand": "",
+            "customTimeLimit": -1,
+            "editorAnchor": 808,
+            "editorCursor": 808,
+            "editorText": "// /*******Bismillahir-Rahmanir-Rahim**********/\n// \n// Name         : Abu Rifat Muhammed Al Hasib\n// Institution  : University of Barisal, Bangladesh\n// Github       : https://github.com/abu-rifat\n// website\t: https://aburifat.com\n// \n// Codeforces   : https://codeforces.com/profile/ARMaster\n// lightoj      : https://lightoj.com/user/abu-rifat\n// AtCoder      : https://atcoder.jp/users/aburifat\n// codechef     : https://www.codechef.com/users/aburifat\n// SPOJ         : https://www.spoj.com/users/abu_rifat\n// UvaOJ        : https://uhunt.onlinejudge.org/id/889274\n// \n// facebook     : https://facebook.com/AbuRifatM\n// linkedin     : https://www.linkedin.com/in/aburifat\n// Email        : rifat.cse4.bu@gmail.com\n// \t\t  armalhasib@gmail.com\n// \t\t  abu.rifat.m@gmail.com\n// \n// Problem\t: Critical Links\n// Contest\t: LightOJ\n// URL\t\t: https://lightoj.com/problem/critical-links\n// Memory Limit : 64 MB\n// Time Limit\t: 1000 ms\n\n\n",
+            "expected": [
+                "Case 1:\n3 critical links\n0 - 1\n3 - 4\n6 - 7\nCase 2:\n0 critical links\nCase 3:\n1 critical links\n0 - 1\n"
+            ],
+            "filePath": "/media/abu-rifat/Rifat/Competitive Programming/LightOJ/critical-links.cpp",
+            "horizontalScrollBarValue": 0,
+            "input": [
+                "3\n\n8\n0 (1) 1\n1 (3) 2 0 3\n2 (2) 1 3\n3 (3) 1 2 4\n4 (1) 3\n7 (1) 6\n6 (1) 7\n5 (0)\n\n0\n\n2\n0 (1) 1\n1 (1) 0\n"
+            ],
+            "isLanguageSet": true,
+            "language": "C++",
+            "problemURL": "https://lightoj.com/problem/critical-links",
+            "savedText": "",
+            "testCaseSplitterStates": [
+                [
+                    171,
+                    156,
+                    170
+                ]
+            ],
+            "testcasesIsShow": [
+                true
+            ],
+            "untitledIndex": 1,
+            "verticalScrollbarValue": 0
+        }
+    ]
+}
