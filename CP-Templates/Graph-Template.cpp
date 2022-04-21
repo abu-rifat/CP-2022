@@ -1,49 +1,59 @@
 #include<bits/stdc++.h>
 using namespace std;
 typedef long long ll;
+#define MX 200010
 
 ll node,edge;
-vector<vector<ll> >adj;
-vector<bool>visited;
+vector<ll>adj[MX];
+bool visited[MX];
 bool idxOne=false;
 
+//Initiate Containers OK
 void init()
 {
-    adj.assign(node+1,vector<ll>());
-    visited.assign(node+1,false);
+	for(ll i=0;i<MX;i++){
+		adj[i].clear();
+		visited[i]=false;
+	}
 }
 
+//Undirected Edges OK
 void unDirEdge(ll u, ll v)
 {
     adj[u].push_back(v);
     adj[v].push_back(u);
 }
 
+//Directed Edges
 void dirEdge(ll u, ll v)
 {
     adj[u].push_back(v);
 }
 
-vector<ll>component;
-void connCompDFS(ll s) {
+//DFS to find single CC
+vector<ll>comp[MX];
+void compDFS(ll s,ll idx) {
     visited[s]=true ;
-    component.push_back(s);
+    comp[idx].push_back(s);
     for (auto u:adj[s]) {
-        if (!visited[u])
-            connCompDFS(u);
-    }
-}
-
-vector<vector<ll> >connComp(){
-    vector<vector<ll> >components;
-    for(ll i=0;i<node;i++){
-        if(!visited[i]){
-            component.clear();
-            connCompDFS(i);
-            components.push_back(component);
+        if (!visited[u]){
+        	visited[u]=true ;
+            compDFS(u,idx);
         }
     }
-    component.clear();
-    return components;
 }
 
+//Get all CC and number of CC
+ll conComp(){
+	for(ll i=0;i<MX;i++)comp[i].clear();
+	ll ctComp=0;
+    ll idx_st=0,idx_end=node;
+    if(idxOne)idx_st++,idx_end++;
+    for(ll i=idx_st;i<idx_end;i++){
+        if(!visited[i]){
+            compDFS(i,ctComp);
+            ctComp++;
+        }
+    }
+    return ctComp;
+}
