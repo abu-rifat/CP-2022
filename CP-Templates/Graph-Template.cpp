@@ -82,7 +82,7 @@ ll conComp(){
     return ctComp;
 }
 
-//Add Cutpoint
+//Add Cutpoint OK
 void addAP(ll v){
     if(!AP[v]){
         AP[v]=1;
@@ -117,7 +117,7 @@ void apBridgeDFS(ll v, ll p=-1){
     if(p==-1&&children>1)addAP(v);
 }
 
-//find All Cutpoints & Bridges
+//find All Cutpoints & Bridges OK
 void apBridge(){
     timer=0;
     ll idx_st=0,idx_end=node;
