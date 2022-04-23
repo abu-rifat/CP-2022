@@ -3,10 +3,16 @@ using namespace std;
 typedef long long ll;
 #define MX 200010
 
+//Basic Graph
 ll node,edge;
 vector<ll>adj[MX];
 bool visited[MX];
 bool idxOne=false;
+
+//Connected Components
+vector<ll>compList[MX];
+
+//Bridge & Articulation Point
 ll timeIn[MX],timeLow[MX];
 ll timer;
 bitset<MX>AP;
@@ -14,15 +20,31 @@ map<pair<ll,ll>,ll>bridge;
 vector<ll>apList;
 vector<pair<ll,ll> >bridgeList;
 
-//Initiate Basic Graph Containers OK
+//Topological Sort Component
+vector<ll>topSortList;
+
+//Strongly Connected Component
+vector<ll>revAdj[MX];
+vector<ll>sccList[MX];
+
+//Initiate Basic Graph
+void initAdj(){
+    for(ll i=0;i<MX;i++)adj[i].clear();
+}
+void initVisited(){
+    for(ll i=0;i<MX;i++)visited[i]=false;
+}
 void initGraph(){
-    for(ll i=0;i<MX;i++){
-		adj[i].clear();
-		visited[i]=false;
-	}
+    initAdj();
+    initVisited();
 }
 
-//Initiate Cutpoint & Bridge Containers OK
+//Initiate Connected Component
+void initConComp(){
+    for(ll i=0;i<MX;i++)compList[i].clear();
+}
+
+//Initiate Bridge Cutpoint
 void initAPBridge(){
     AP.reset();
     apList.clear();
@@ -34,18 +56,21 @@ void initAPBridge(){
     }
 }
 
-//Initiate OK
-void init()
-{
-    initGraph();
-    initAPBridge();
+//Initiate Topological Sort
+void initTopSort(){
+    topSortList.clear();
 }
 
-//Undirected Edges OK
-void unDirEdge(ll u, ll v)
-{
-    adj[u].push_back(v);
-    adj[v].push_back(u);
+//Initiate Reverse Adjacent List
+void initRevAdj(){
+    for(ll i=0;i<MX;i++)revAdj[i].clear();
+}
+
+//Initiate Strongly Connected Component
+void initSCC(){
+    initTopSort();
+    initRevAdj();
+    for(ll i=0;i<MX;i++)sccList[i].clear();
 }
 
 //Directed Edges
@@ -54,8 +79,20 @@ void dirEdge(ll u, ll v)
     adj[u].push_back(v);
 }
 
+//Undirected Edges OK
+void unDirEdge(ll u, ll v)
+{
+    dirEdge(u,v);
+    dirEdge(v,u);
+}
+
+//Directed SCC Edges
+void SCCEdge(ll u, ll v){
+    dirEdge(u,v);
+    revAdj[v].push_back(u);
+}
+
 //DFS to find single CC OK
-vector<ll>compList[MX];
 void compDFS(ll s,ll idx) {
     visited[s]=true ;
     compList[idx].push_back(s);
@@ -69,7 +106,6 @@ void compDFS(ll s,ll idx) {
 
 //Get all CC and number of CC OK
 ll conComp(){
-	for(ll i=0;i<MX;i++)compList[i].clear();
 	ll ctComp=0;
     ll idx_st=0,idx_end=node;
     if(idxOne)idx_st++,idx_end++;
@@ -128,3 +164,45 @@ void apBridge(){
         }
     }
 }
+//Topological Sort DFS
+void topSortDFS(ll s){
+    visited[s]=true;
+    for(auto u:adj[s]){
+        if(!visited[u]){
+            topSortDFS(u);
+        }
+    }
+    topSortList.push_back(s);
+}
+
+//Topological Sort
+void topSort(){
+    for(ll i=0;i<node;i++){
+        if(!visited[i])topSortDFS(i);
+    }
+    reverse(topSortList.begin(),topSortList.end());
+}
+
+//Strongly Connected Component DFS
+void sccDFS(ll s, ll idx){
+    visited[s]=true;
+    sccList[idx].push_back(s);
+    for(auto u:revAdj[s]){
+        if(!visited[u])sccDFS(u,idx);
+    }
+}
+
+//Stringly Connected Component
+void SCC(){
+    ll ctSCC=0;
+    topSort();
+    for(ll i=0;i<MX;i++)visited[i]=false;
+    for(ll i=0;i<node;i++){
+        ll s=topSortList[i];
+        if(!visited[s]){
+            sccDFS(s,ctSCC);
+            ctSCC++;
+        }
+    }
+}
+
