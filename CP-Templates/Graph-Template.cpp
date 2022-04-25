@@ -9,6 +9,10 @@ vector<ll>adj[MX];
 bool visited[MX];
 bool idxOne=false;
 
+//weighted Graph
+ll weight;
+vector<pair<ll,ll> >wetAdj[MX];
+
 //Connected Components
 vector<ll>compList[MX];
 
