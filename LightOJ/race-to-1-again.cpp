@@ -57,23 +57,25 @@ void init(){
 	for(ll i=0;i<MX;i++)dp[i]=-1;
 }
 
-double ctDP(ll n){
+double expVal(ll n){
 	if(dp[n]>=0)return dp[n];
 	if(n<=1)return dp[n]=0;
-	if(n==2)return dp[n]=2;
 	ll prob=(double)1/(double)nod[n];
-	double val=prob*(double)nod[n];
+	double val=(double)nod[n];
+	set<ll>divs;
 	for(ll i=2;i<=sqrt(n);i++){
 		if(n%i==0){
-			cout<<"I was there: "<<n<<" "<<i<<endl;
-			val+=(prob*ctDP(i));
-			if((n/i)>i){
-				cout<<"I also was there: "<<n<<" "<<n/i<<endl;
-				val+=(prob*ctDP(n/i));
-			}
+			divs.insert(i);
+			divs.insert(n/i);
 		}
 	}
-	//val/=((double)(nod[n]-1));
+	set<ll>::iterator itr;
+	//set<ll,greater<ll> >::iterator bigItr;
+	for(itr=divs.begin();itr!=divs.end();itr++){
+		ll div=*itr;
+		if(div!=n)val+=expVal(div);
+	}
+	val/=((double)(nod[n]-1));
 	return dp[n]=val;
 }
 
@@ -86,7 +88,8 @@ int main(){
 		double ans;
 		ll n;
 		cin>>n;
-		ans=ctDP(n);
+		ans=expVal(n);
+		cout<<fixed<<setprecision(9);
 		cout<<"Case "<<T<<": "<<ans<<endl;
 	}
 	return 0;
