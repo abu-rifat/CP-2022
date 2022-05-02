@@ -24,15 +24,12 @@
 // Memory Limit : 64 MB
 // Time Limit	: 2000 ms
 
-
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 const ll MX = 5e5+7;
 
-ll tree[MX] = { 0 };
-ll lazy[MX] = { 0 };
-ll arr[MX] = { 0 };
+ll tree[MX],lazy[MX],arr[MX];
 
 void STLazyInit(){
 	for(ll i=0;i<MX;i++){
@@ -41,8 +38,18 @@ void STLazyInit(){
 		arr[i]=0;
 	}
 }
-
-
+//Depends on the problem
+void lazyPush(ll node, ll left, ll right,ll lc,ll rc){
+	tree[node] = !tree[node];
+	if (left != right) {
+		lazy[lc] =!(lazy[lc]);
+		lazy[rc] =!(lazy[rc]);
+	}
+}
+//Depends on the problem
+ll lazyMarge(ll a, ll b){
+	return a+b;
+}
 void STLazyBuild(ll node, ll left, ll right)
 {
 	if (left ==right) {
@@ -54,54 +61,40 @@ void STLazyBuild(ll node, ll left, ll right)
 	ll mid=(left+right)/2;
 	STLazyBuild(lc, left, mid);
 	STLazyBuild(rc, mid+1, right);
-	tree[node] = tree[lc] + tree[rc];
+	tree[node] =lazyMarge(tree[lc],tree[rc]);
 }
-
 void STLazyUpdate(ll node, ll left, ll right, ll qLeft, ll qRight)
 {
 	ll lc=(node<<1);
 	ll rc=((node<<1)|1);
 	if (lazy[node] != 0) {
-		tree[node] = !tree[node];
-		if (left != right) {
-			lazy[lc] =!(lazy[lc]);
-			lazy[rc] =!(lazy[rc]);
-		}
-		lazy[node] = 0;
+		lazyPush(node,left,right,lc,rc);
+		lazy[node]=0;
 	}
 	if (left > right || left > qRight || right < qLeft)return;
 	if (left >= qLeft && right <= qRight) {
-		tree[node] = !tree[node];
-		if (left != right) {
-			lazy[lc] = !(lazy[lc]);
-			lazy[rc] = !(lazy[rc]);
-		}
+		lazyPush(node,left,right,lc,rc);
 		return;
 	}
 	ll mid=(left+right)/2;
 	STLazyUpdate(lc, left, mid, qLeft, qRight);
 	STLazyUpdate(rc, mid+1, right, qLeft, qRight);
-	tree[node] = tree[lc] + tree[rc];
+	tree[node] = lazyMarge(tree[lc],tree[rc]);
 }
-
 ll STLazyQuery(ll node, ll left, ll right, ll qLeft, ll qRight)
 {
 	ll lc=(node<<1);
 	ll rc=((node<<1)|1);
 	if (left > right || left > qRight || right < qLeft)return 0;
 	if (lazy[node] != 0) {
-		tree[node] = !tree[node];
-		if (left != right) {
-			lazy[lc] =!(lazy[lc]);
-			lazy[rc] =!(lazy[rc]);
-		}
+		lazyPush(node,left,right,lc,rc);
 		lazy[node] = 0;
 	}
 	if (left >= qLeft && right <= qRight)return tree[node];
 	ll mid=(left+right)/2;
 	ll q1 = STLazyQuery(lc, left, mid, qLeft, qRight);
 	ll q2 = STLazyQuery(rc, mid+1, right, qLeft, qRight);
-	return q1 + q2;
+	return lazyMarge(q1,q2);
 }
 
 int main() {
