@@ -58,7 +58,7 @@ void STLazyBuild(ll node, ll left, ll right)
 	}
 	ll lc=(node<<1);
 	ll rc=((node<<1)|1);
-	ll mid=(left+right)/2;
+	ll mid=left+(right-left)/2;
 	STLazyBuild(lc, left, mid);
 	STLazyBuild(rc, mid+1, right);
 	tree[node] =lazyMarge(tree[lc],tree[rc]);
@@ -76,7 +76,7 @@ void STLazyUpdate(ll node, ll left, ll right, ll qLeft, ll qRight)
 		lazyPush(node,left,right,lc,rc);
 		return;
 	}
-	ll mid=(left+right)/2;
+	ll mid=left+(right-left)/2;
 	STLazyUpdate(lc, left, mid, qLeft, qRight);
 	STLazyUpdate(rc, mid+1, right, qLeft, qRight);
 	tree[node] = lazyMarge(tree[lc],tree[rc]);
@@ -91,13 +91,14 @@ ll STLazyQuery(ll node, ll left, ll right, ll qLeft, ll qRight)
 		lazy[node] = 0;
 	}
 	if (left >= qLeft && right <= qRight)return tree[node];
-	ll mid=(left+right)/2;
+	ll mid=left+(right-left)/2;
 	ll q1 = STLazyQuery(lc, left, mid, qLeft, qRight);
 	ll q2 = STLazyQuery(rc, mid+1, right, qLeft, qRight);
 	return lazyMarge(q1,q2);
 }
 
 int main() {
+	ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
     ll t;
     cin>>t;
     for(ll T=1;T<=t;T++){
