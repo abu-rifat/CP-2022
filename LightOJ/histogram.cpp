@@ -75,7 +75,6 @@ int main(){
 			ll val=abs(right[i]-left[i])+1;
 			val*=arr[i];
 			ans=max(ans,val);
-			cout<<left[i]<<" "<<right[i]<<endl;
 		}
 		cout<<"Case "<<T<<": "<<ans<<endl;
 	}
