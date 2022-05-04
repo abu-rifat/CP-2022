@@ -71,10 +71,11 @@ int main(){
 			}
 			st.push(i);
 		}
-		for(ll i=0;i<n-1;i++){
+		for(ll i=0;i<n;i++){
 			ll val=abs(right[i]-left[i])+1;
 			val*=arr[i];
 			ans=max(ans,val);
+			cout<<left[i]<<" "<<right[i]<<endl;
 		}
 		cout<<"Case "<<T<<": "<<ans<<endl;
 	}
