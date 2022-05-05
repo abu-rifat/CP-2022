@@ -18,18 +18,13 @@
 // 		  armalhasib@gmail.com
 // 		  abu.rifat.m@gmail.com
 // 
-// Problem	: Wavio Sequence
-// Contest	: LightOJ
-// URL		: https://lightoj.com/problem/wavio-sequence
-// Memory Limit : 64 MB
-// Time Limit	: 2000 ms
-
+// Topic  	: Longest Increasing Subsequence Length for all Index
+// Category	: Binary Search
+// Complexity	: O(nlogn)
 
 #include<bits/stdc++.h>
 using namespace std;
 typedef long long ll;
-
-
 
 vector<ll> LISLen(vector<ll>arr){
 	vector<ll>emp;
@@ -56,28 +51,11 @@ vector<ll> LISLen(vector<ll>arr){
 }
 
 int main(){
-	ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
-	ll t;
-	cin>>t;
-	for(ll T=1;T<=t;T++){
-		ll n;
-		cin>>n;
-		vector<ll>arr(n,0);
-		for(ll i=0;i<n;i++){
-			cin>>arr[i];
-		}
-		vector<ll>left=LISLen(arr);
-		reverse(arr.begin(),arr.end());
-		vector<ll>right=LISLen(arr);
-		ll ans=1;
-		for(ll i=0;i<n;i++){
-			ll val=min(left[i],right[n-i-1]);
-			val*=2;
-			val--;
-			ans=max(ans,val);
-		}
-		cout<<"Case "<<T<<": "<<ans<<endl;
-	}
+	vector<ll>arr{0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15};
+	vector<ll>ans=LISLen(arr);
+    for(ll i=0;i<ans.size();i++){
+        cout<<"LIS Length from index 0 to index "<<i<<"(including index "<<i<<" value) is: "<<ans[i]<<endl;
+    }
 	return 0;
 }
 
