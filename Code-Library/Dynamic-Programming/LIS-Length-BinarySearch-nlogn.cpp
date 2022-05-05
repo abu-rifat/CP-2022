@@ -18,8 +18,34 @@
 // 		  armalhasib@gmail.com
 // 		  abu.rifat.m@gmail.com
 // 
-// Topic  	: Longest Increasing Subsequence
-// Category	: Dynamic Programming
+// Topic  	: Longest Increasing Subsequence Length
+// Category	: Binary Search
 // Complexity	: O(nlogn)
+
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+ll LISLen(vector<ll>arr){
+	if(arr.size()==0)return 0;
+	vector<ll>tail(arr.size(),0);
+	ll len=1;
+	tail[0]=arr[0];
+	for(ll i=1;i<(ll)arr.size();i++){
+		auto b=tail.begin();
+		auto e=tail.begin()+len;
+		auto it=lower_bound(b,e,arr[i]);
+		if(it==tail.begin()+len)tail[len++]=arr[i];
+		else *it=arr[i];
+	}
+	return len;
+}
+
+int main(){
+	vector<ll>arr{0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15};
+	ll len=LISLen(arr);
+	cout<<len<<endl;
+	return 0;
+}
 
 
